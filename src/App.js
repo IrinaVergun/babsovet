@@ -1,15 +1,33 @@
 
+import { Component } from 'react';
 import './App.css';
 import Form from './Form';
-function App(props) {
-  return (
+// import Fcomponent from './Fcomponent'; 
+
+
+class App extends Component{
+  render(){
+    return(
+      
+         <div className='app'>
+    <Form text="УЗРИ" title="Регистраций Нет!" net='Зачем тебе проверять?' pasword='Пороль, 1234'/>
+    </div>
+      
+    )
+  }
+}
+
+
+
     
-    <div className='app'>
-    <Form text="УЗРИ" title="Регистраций Нет!" net='Зачем тебе проверять?' pasword='Буквы, которые я сказала ввести:'/>
+    
+    
+   
+
+
+ 
+ 
  
 
- </div>
- )
-}
 
 export default App;
