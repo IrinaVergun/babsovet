@@ -15,6 +15,7 @@ this.FactKlickOnGalky=this.FactKlickOnGalky.bind(this)
 handleSubmit(event){
   event.preventDefault()
   console.log('form is submited. Pasword value is', this.state.paswordtext)
+  this.props.onSubmit()
 }
 
 handlePaswordlChange(event){
@@ -31,7 +32,9 @@ FactKlickOnGalky(event){
     render(){
       
       const type = this.state.KlickonGalky ? "text" : "password";
+      
     return (
+      
         < form onSubmit={this.handleSubmit}>
         <div className='block'>
       <div className="mb-3">

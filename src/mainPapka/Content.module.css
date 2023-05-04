@@ -1,0 +1,50 @@
+.header{
+    display:grid;
+    grid-template-rows:70px;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-areas: "m j i a f";
+   
+    text-align: center;
+    border-radius: 10px;
+    
+    /* border: 3px solid black; */
+    
+
+}
+.header > div {
+    border: 3px solid black;
+    border-radius: 12px;
+    box-sizing: border-box;
+    background-color: yellowgreen;
+    cursor:pointer;
+    font-size: 40px;
+}
+.header > div.active{
+    background-color: aqua;
+}
+
+.Main{
+    grid-area:m
+
+
+}
+
+.julia{
+    grid-area:j
+
+}
+
+.irina{
+    grid-area: i;
+
+}
+
+.ananas{
+    grid-area: a;
+
+}
+
+.forall{
+    grid-area:f
+
+}
