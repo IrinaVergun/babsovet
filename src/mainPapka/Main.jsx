@@ -1,5 +1,6 @@
 import React from 'react';
 import C from './Content.module.css';
+import SnaikeGame from '../snaikgame/SnaikeGame';
 
 class Main extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class Main extends React.Component {
     };
     render() {
         return (
-            <div>
+            <div className={C.main}>
                 <div className={C.header}>
                     <div
                         onClick={() => this.mainclick()}
@@ -68,8 +69,9 @@ class Main extends React.Component {
                 </div>
                 {this.state.selected === 'main' && (
                     <div>
-                        <div className='gamebutton'>играть</div>
-                        <div className='time'>часы</div>
+                        <SnaikeGame />
+                        {/* <div className='gamebutton'>играть</div>
+                        <div className='time'>часы</div> */}
                     </div>
                 )}
 
