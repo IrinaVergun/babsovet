@@ -6,7 +6,7 @@ import Main from './mainPapka/Main';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { login: false };
+        this.state = { login: true }; //TODO:FALSE
     }
     render() {
         if (this.state.login) {

@@ -5,8 +5,9 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
-    max-width: 480px;
-    min-height: 480px;
+    width: 480px;
+    height: 480px;
+    position: relative;
 }
 .black {
     background: black;
@@ -30,4 +31,14 @@
 .textPlay {
     text-align: center;
     font-size: 70px;
+}
+
+.kybik {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    background: red;
+    width: 20px;
+    height: 20px;
 }
