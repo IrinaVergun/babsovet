@@ -5,7 +5,7 @@ const BOARD_SIZE = 10;
 const DEFAULT_CELLS_VALUE = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0));
 const AVATBLE_MOVES = ['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'];
 const SPEED = 500;
-const WIN_RESULT = 70;
+const WIN_RESULT = `70`;
 const checkAvaitableSlot = (position) => {
     switch (true) {
         case position >= BOARD_SIZE:

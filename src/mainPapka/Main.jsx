@@ -1,6 +1,7 @@
 import React from 'react';
 import C from './Content.module.css';
 import SnaikeGame from '../snaikgame/SnaikeGame';
+import MyCalendar from '../Calendar';
 
 class Main extends React.Component {
     constructor(props) {
@@ -75,7 +76,11 @@ class Main extends React.Component {
                     </div>
                 )}
 
-                {this.state.selected === 'julia' && <div>юлин календарь</div>}
+                {this.state.selected === 'julia' && (
+                    <div>
+                        юлин календарь <MyCalendar />
+                    </div>
+                )}
                 {this.state.selected === 'irina' && <div>иринин календарь</div>}
                 {this.state.selected === 'anasteisha' && <div>анастейши календарь</div>}
                 {this.state.selected === 'forall' && <div>общий календарь</div>}

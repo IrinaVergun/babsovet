@@ -6,7 +6,7 @@ export default class SnaikeGame extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            game: true, // TODO: false
+            game: false, // TODO:
             window: false,
             kybikPosition: {
                 top: 0,
