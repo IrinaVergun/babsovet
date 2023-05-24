@@ -28,7 +28,8 @@ const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
     const [open, setOpen] = React.useState(false);
-
+    const [slotInfo, setSlotInfo] = React.useState(null);
+    const [title, setTitle] = React.useState('');
     const [events, setEvents] = React.useState([
         {
             title: 'Ирин ДР',
@@ -38,18 +39,23 @@ const MyCalendar = (props) => {
         },
     ]);
 
+    function onSave() {
+        const newEvent = {
+            title: title,
+            start: slotInfo.start,
+            end: slotInfo.end,
+            allDay: true,
+        };
+
+        setEvents((prevEvents) => [...prevEvents, newEvent]);
+    }
+
     const onSelectSlot = useCallback((slotInfo) => {
         setOpen(true);
-        // TODO: сохранить slotInfo в useState
-        console.log(slotInfo);
-        // const newEvent = {
-        //     title: '#1',
-        //     start: slotInfo.start,
-        //     end: slotInfo.end,
-        //     allDay: true,
-        // };
+        setSlotInfo(slotInfo);
 
-        // setEvents((prevEvents) => [...prevEvents, newEvent]);
+        console.log(slotInfo);
+        //
     }, []);
 
     return (
@@ -73,14 +79,33 @@ const MyCalendar = (props) => {
                 size={30}
                 backdropClicked={() => setOpen(false)}
             >
-                <div>
-                    <div>My Panel Content</div>
-                    {/* TODO: сделать инпут для названия */}
-                    <input />
+                <div className='firstdivpanel'>
+                    <div>Мои пиздатые планы на сегодня:</div>
+                    <br></br>
+                    {/* TODO: сделать инпут для названия */}{' '}
+                    <div className='areaandbutton'>
+                        <textarea
+                            onChange={(event) => setTitle(event.target.value)}
+                            placeholder='Впишу-ка я и сохраню их тут'
+                            autoFocus
+                            className='textpanel'
+                            value={title}
+                        />
+                        <button onClick={() => onSave()} className='buttonpanel'>
+                            Ок
+                        </button>
+                        <button type='submit' className='buttonpanel'>
+                            Ред
+                        </button>
+                    </div>
                     {/* TODO: сделать выбор времени */}
                     {/* <button onClick={() => setOpenPanel(false)}>close</button> */}
                 </div>
+                {/* сохранять сщстояние в юз стейт значение текст эрии,
+                потом на клик сохрфнить использовать закоментированый код выше
+                добовлять нью увент к состоянию */}
             </SlidingPanel>
+
             {/* если опен тру показывать окно */}
         </div>
     );
