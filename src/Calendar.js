@@ -6,7 +6,8 @@ import 'moment/locale/ru';
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import './Calendar.css';
-// import './Selectslot';
+import { v4 as uuidv4 } from 'uuid';
+
 moment.locale('ru');
 const messages = {
     allDay: 'весь день',
@@ -28,38 +29,68 @@ const localizer = momentLocalizer(moment);
 
 const MyCalendar = (props) => {
     const [open, setOpen] = React.useState(false);
+    const [isedditing, setediting] = React.useState(false);
     const [slotInfo, setSlotInfo] = React.useState(null);
     const [title, setTitle] = React.useState('');
+    const [id, setId] = React.useState(null);
     const [events, setEvents] = React.useState([
         {
             title: 'Ирин ДР',
             start: new Date(2023, 5, 23),
             end: new Date(2023, 5, 23),
             allDay: true,
+            id: uuidv4(),
         },
     ]);
 
     function onSave() {
-        const newEvent = {
-            title: title,
-            start: slotInfo.start,
-            end: slotInfo.end,
-            allDay: true,
-        };
+        if (id == null) {
+            // создание
+            const newEvent = {
+                title: title,
+                start: slotInfo.start,
+                end: slotInfo.end,
+                allDay: true,
+                id: uuidv4(),
+            };
 
-        setEvents((prevEvents) => [...prevEvents, newEvent]);
+            setEvents((prevEvents) => [...prevEvents, newEvent]);
+        } else {
+            // редактирование
+            const index = events.findIndex((event) => event.id === id);
+            const redevent = events[index];
+            const updatedEvent = {
+                ...redevent,
+                title,
+            };
+            const newEvents = [...events];
+            newEvents[index] = updatedEvent;
+            setEvents(newEvents);
+        }
     }
 
+    // для создания события
     const onSelectSlot = useCallback((slotInfo) => {
         setOpen(true);
         setSlotInfo(slotInfo);
-
+        setediting(true);
+        setTitle('');
         console.log(slotInfo);
+        setId(null);
+
         //
+    }, []);
+    // для редоктирования события
+    const onSelectEvent = useCallback((calEvent) => {
+        setOpen(true);
+        setediting(false);
+        setTitle(calEvent.title);
+        setId(calEvent.id);
     }, []);
 
     return (
         <div style={{ background: 'white' }}>
+            <div className='height600'></div>
             <Calendar
                 views={['month', 'agenda']}
                 defaultView='month'
@@ -71,6 +102,7 @@ const MyCalendar = (props) => {
                 startAccessor='start'
                 endAccessor='end'
                 style={{ height: 500 }}
+                onSelectEvent={onSelectEvent}
             />
 
             <SlidingPanel
@@ -84,19 +116,31 @@ const MyCalendar = (props) => {
                     <br></br>
                     {/* TODO: сделать инпут для названия */}{' '}
                     <div className='areaandbutton'>
-                        <textarea
-                            onChange={(event) => setTitle(event.target.value)}
-                            placeholder='Впишу-ка я и сохраню их тут'
-                            autoFocus
-                            className='textpanel'
-                            value={title}
-                        />
-                        <button onClick={() => onSave()} className='buttonpanel'>
-                            Ок
-                        </button>
-                        <button type='submit' className='buttonpanel'>
-                            Ред
-                        </button>
+                        {isedditing ? (
+                            <>
+                                <textarea
+                                    onChange={(event) => setTitle(event.target.value)}
+                                    placeholder='Впишу-ка я и сохраню их тут'
+                                    autoFocus
+                                    className='textpanel'
+                                    value={title}
+                                />
+                                <button onClick={() => onSave()} className='buttonpanel'>
+                                    Ок
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <div>{title}</div>
+                                <button
+                                    onClick={() => setediting(true)}
+                                    type='submit'
+                                    className='buttonpanel'
+                                >
+                                    Ред
+                                </button>
+                            </>
+                        )}
                     </div>
                     {/* TODO: сделать выбор времени */}
                     {/* <button onClick={() => setOpenPanel(false)}>close</button> */}
