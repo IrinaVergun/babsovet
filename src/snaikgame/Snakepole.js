@@ -98,7 +98,7 @@ const Snakepole = ({ onGameEnd }) => {
     };
 
     return (
-        <div>
+        <div className='zmeikaIres'>
             {DEFAULT_CELLS_VALUE.map((row, indexR) => (
                 <div key={indexR} className='myrow'>
                     {row.map((cell, indexC) => {
@@ -118,7 +118,7 @@ const Snakepole = ({ onGameEnd }) => {
                 </div>
             ))}
             <div className='blockres'>
-                <h1>Результат:{snake.length - 1}</h1>;
+                <h1>Результат:{snake.length - 1}</h1>
             </div>
         </div>
     );

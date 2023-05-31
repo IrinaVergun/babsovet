@@ -78,12 +78,24 @@ class Main extends React.Component {
 
                 {this.state.selected === 'julia' && (
                     <div>
-                        юлин календарь <MyCalendar />
+                        <MyCalendar />
                     </div>
                 )}
-                {this.state.selected === 'irina' && <div>иринин календарь</div>}
-                {this.state.selected === 'anasteisha' && <div>анастейши календарь</div>}
-                {this.state.selected === 'forall' && <div>общий календарь</div>}
+                {this.state.selected === 'irina' && (
+                    <div>
+                        <MyCalendar />
+                    </div>
+                )}
+                {this.state.selected === 'anasteisha' && (
+                    <div>
+                        <MyCalendar />
+                    </div>
+                )}
+                {this.state.selected === 'forall' && (
+                    <div>
+                        <MyCalendar />
+                    </div>
+                )}
             </div>
         );
     }
