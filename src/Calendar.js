@@ -44,28 +44,35 @@ const MyCalendar = (props) => {
     ]);
 
     function onSave() {
-        if (id == null) {
-            // создание
-            const newEvent = {
-                title: title,
-                start: slotInfo.start,
-                end: slotInfo.end,
-                allDay: true,
-                id: uuidv4(),
-            };
-
-            setEvents((prevEvents) => [...prevEvents, newEvent]);
+        if (title == '') {
+            alert(
+                'Введите событие, оно у вас пустое... Не, ну в внатуре так сложно заполнить событие или что? Ты как вообще до этого дошёл? Ты кто по жизне вообще? Ты чей хлеб ска хаваешь? Ты начинаешь по тонкой дороге ходить мой друг, весьма тонкой и смотри по сторонам после таких поворотов на ней бывают и щели. Как провалишься, считай что, пиши -пропало. ',
+            );
         } else {
-            // редактирование
-            const index = events.findIndex((event) => event.id === id);
-            const redevent = events[index];
-            const updatedEvent = {
-                ...redevent,
-                title,
-            };
-            const newEvents = [...events];
-            newEvents[index] = updatedEvent;
-            setEvents(newEvents);
+            if (id == null) {
+                // создание
+                const newEvent = {
+                    title: title,
+                    start: slotInfo.start,
+                    end: slotInfo.end,
+                    allDay: true,
+                    id: uuidv4(),
+                };
+
+                setEvents((prevEvents) => [...prevEvents, newEvent]);
+            } else {
+                // редактирование
+                const index = events.findIndex((event) => event.id === id);
+                const redevent = events[index];
+                const updatedEvent = {
+                    ...redevent,
+                    title,
+                };
+                const newEvents = [...events];
+                newEvents[index] = updatedEvent;
+                setEvents(newEvents);
+            }
+            setOpen(false);
         }
     }
 
@@ -103,6 +110,7 @@ const MyCalendar = (props) => {
                 endAccessor='end'
                 style={{ height: 500 }}
                 onSelectEvent={onSelectEvent}
+                showAllEvents={true}
             />
 
             <SlidingPanel
@@ -124,6 +132,10 @@ const MyCalendar = (props) => {
                                     autoFocus
                                     className='textpanel'
                                     value={title}
+                                    ref={(el) => {
+                                        el?.focus();
+                                        el?.setSelectionRange(el.value.length, el.value.length);
+                                    }}
                                 />
                                 <button onClick={() => onSave()} className='buttonpanel'>
                                     Ок
