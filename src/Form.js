@@ -14,7 +14,7 @@ class Form extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log('form is submited. Pasword value is', this.state.paswordtext);
-        this.props.onSubmit();
+        this.props.onSubmit(this.state.paswordtext);
     }
 
     handlePaswordlChange(event) {

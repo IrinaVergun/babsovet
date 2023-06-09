@@ -40,6 +40,7 @@ const MyCalendar = (props) => {
             end: new Date(2023, 5, 23),
             allDay: true,
             id: uuidv4(),
+            color: 'green',
         },
     ]);
 
@@ -111,6 +112,15 @@ const MyCalendar = (props) => {
                 style={{ height: 500 }}
                 onSelectEvent={onSelectEvent}
                 showAllEvents={true}
+                eventPropGetter={(event) => {
+                    if (event.color) {
+                        return {
+                            style: {
+                                backgroundColor: event.color,
+                            },
+                        };
+                    }
+                }}
             />
 
             <SlidingPanel
@@ -122,7 +132,6 @@ const MyCalendar = (props) => {
                 <div className='firstdivpanel'>
                     <div>Мои пиздатые планы на сегодня:</div>
                     <br></br>
-                    {/* TODO: сделать инпут для названия */}{' '}
                     <div className='areaandbutton'>
                         {isedditing ? (
                             <>
@@ -154,15 +163,8 @@ const MyCalendar = (props) => {
                             </>
                         )}
                     </div>
-                    {/* TODO: сделать выбор времени */}
-                    {/* <button onClick={() => setOpenPanel(false)}>close</button> */}
                 </div>
-                {/* сохранять сщстояние в юз стейт значение текст эрии,
-                потом на клик сохрфнить использовать закоментированый код выше
-                добовлять нью увент к состоянию */}
             </SlidingPanel>
-
-            {/* если опен тру показывать окно */}
         </div>
     );
 };

@@ -7,7 +7,6 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    /* align-items: ; */
 }
 
 .app {
@@ -17,8 +16,6 @@ body {
 }
 
 form {
-    /* padding-top: 100px;  */
-    /* padding-left: 00px; */
     max-width: 310px;
     margin-top: 10%;
     margin-left: 43%;

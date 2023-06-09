@@ -1,7 +1,7 @@
 .mainblockgame {
     box-sizing: border-box;
     display: block;
-    border: 10px dotted yellow;
+    border: 10px solid #066ee4;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;

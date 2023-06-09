@@ -6,7 +6,7 @@ import Main from './mainPapka/Main';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { login: true }; //TODO:FALSE
+        this.state = { login: false };
     }
     render() {
         if (this.state.login) {
@@ -15,13 +15,22 @@ class App extends Component {
             return (
                 <div className='app'>
                     <Form
-                        onSubmit={() => {
-                            this.setState({ login: true });
+                        onSubmit={(password) => {
+                            console.log('password', password);
+                            if (password === '') {
+                                alert(
+                                    'Сказано ввести пароль, топишь потыкать клавиши, которые я сказала ранее,по буквам...',
+                                );
+                            } else if (password === '1234') {
+                                alert('Наебала, объебала) Вспоминай пароль!');
+                            } else {
+                                this.setState({ login: true });
+                            }
                         }}
                         text='УЗРИ'
                         title='Регистраций Нет!'
                         net='Зачем тебе проверять?'
-                        pasword='Пороль: 1234'
+                        pasword='Пароль: 1234'
                     />
                 </div>
             );

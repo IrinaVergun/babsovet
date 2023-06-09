@@ -3,99 +3,69 @@ import C from './Content.module.css';
 import SnaikeGame from '../snaikgame/SnaikeGame';
 import MyCalendar from '../Calendar';
 
+const menu = [
+    {
+        name: 'Главная',
+        value: 'glavnaya',
+        Component: SnaikeGame,
+    },
+    {
+        name: 'Юлии',
+        value: 'julia',
+        Component: MyCalendar,
+    },
+    {
+        name: 'Ирины',
+        value: 'irina',
+        Component: MyCalendar,
+    },
+    {
+        name: 'Анастейши',
+        value: 'anasteisha',
+        Component: MyCalendar,
+    },
+    {
+        name: 'Общий',
+        value: 'forall',
+        Component: MyCalendar,
+    },
+];
+
 class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected: 'main',
+            selected: 'glavnaya',
         };
     }
-    mainclick = () => {
-        this.setState({ selected: 'main' });
-        console.log('клик по главной', this);
-    };
-    juliaclick = () => {
-        this.setState({ selected: 'julia' });
-        console.log('клик по юле', this);
-    };
-    irinaclick = () => {
-        this.setState({ selected: 'irina' });
-        console.log('клик по ирине', this);
-    };
-    anasteishaclick = () => {
-        this.setState({ selected: 'anasteisha' });
-        console.log('клик по анастейше', this);
-    };
-    forAllclick = () => {
-        this.setState({ selected: 'forall' });
-        console.log('клик на общий', this);
+    onMenuClick = (value) => {
+        this.setState({ selected: value });
+        console.log(`клик на ${value}`);
     };
     render() {
         return (
             <div className={C.main}>
                 <div className={C.header}>
-                    <div
-                        onClick={() => this.mainclick()}
-                        className={`${C.Main} ${this.state.selected === 'main' && C.active}`}
-                    >
-                        главная
-                    </div>
-
-                    <div
-                        onClick={() => this.juliaclick()}
-                        className={`${C.julia} ${this.state.selected === 'julia' && C.active}`}
-                    >
-                        юлии
-                    </div>
-                    <div
-                        onClick={() => this.irinaclick()}
-                        className={`${C.irina} ${this.state.selected === 'irina' && C.active}`}
-                    >
-                        ирины
-                    </div>
-                    <div
-                        onClick={() => this.anasteishaclick()}
-                        className={`${C.anasteisha} ${
-                            this.state.selected === 'anasteisha' && C.active
-                        }`}
-                    >
-                        анастейши
-                    </div>
-                    <div
-                        onClick={() => this.forAllclick()}
-                        className={`${C.forall} ${this.state.selected === 'forall' && C.active}`}
-                    >
-                        общий
-                    </div>
+                    {menu.map((punkt) => {
+                        return (
+                            <div
+                                key={punkt.value}
+                                onClick={() => this.onMenuClick(punkt.value)}
+                                className={`${C[punkt.value]} ${
+                                    this.state.selected === punkt.value && C.active
+                                }`}
+                            >
+                                {punkt.name}
+                            </div>
+                        );
+                    })}
                 </div>
-                {this.state.selected === 'main' && (
-                    <div>
-                        <SnaikeGame />
-                        {/* <div className='gamebutton'>играть</div>
-                        <div className='time'>часы</div> */}
-                    </div>
-                )}
-
-                {this.state.selected === 'julia' && (
-                    <div>
-                        <MyCalendar />
-                    </div>
-                )}
-                {this.state.selected === 'irina' && (
-                    <div>
-                        <MyCalendar />
-                    </div>
-                )}
-                {this.state.selected === 'anasteisha' && (
-                    <div>
-                        <MyCalendar />
-                    </div>
-                )}
-                {this.state.selected === 'forall' && (
-                    <div>
-                        <MyCalendar />
-                    </div>
-                )}
+                {menu.map((punkt) => {
+                    if (this.state.selected === punkt.value) {
+                        const Component = punkt.Component;
+                        return <Component key={punkt.value} />;
+                    }
+                })}
             </div>
         );
     }
