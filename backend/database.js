@@ -45,9 +45,9 @@ class Database {
     })
   }
 
-  async getPasswords() {
-    const data = await this._readGoogleSheet('Passwords', 'A:B');
-    console.log(data);
+  async getUsers() {
+    const data = await this._readGoogleSheet('Users', 'A:B');
+    return data.map(([id, password]) => ({ id, password }))
   }
 }
 
