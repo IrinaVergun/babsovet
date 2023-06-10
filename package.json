@@ -7,7 +7,8 @@
     "build-fe": "cd frontend && npm i && npm run build",
     "build-be": "cd backend && npm i",
     "start-server": "cd backend && npm run start",
-    "start": "npm run build-fe && npm run build-be && npm run start-server"
+    "build": "npm run build-fe && npm run build-be",
+    "start": "npm run start-server"
   },
   "author": "",
   "license": "ISC"
