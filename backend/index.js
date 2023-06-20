@@ -6,10 +6,11 @@ const { generateAccessToken } = require("./autorization");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-app.use(cors());
-
 const app = express();
 const port = process.env.PORT || 3000;
+
+// CORS
+app.use(cors());
 
 // JSON
 app.use(bodyParser.json());
