@@ -39,6 +39,7 @@ app.post("/login", async (req, res) => {
   const token = generateAccessToken({ username: req.body.username });
   return res.status(200).json({
     token,
+    id: user.id,
   });
 });
 
