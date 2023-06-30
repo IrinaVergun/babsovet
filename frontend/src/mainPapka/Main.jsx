@@ -37,6 +37,7 @@ class Main extends React.Component {
         this.state = {
             selected: 'glavnaya',
         };
+        console.log(this.props.userId);
     }
     onMenuClick = (value) => {
         this.setState({ selected: value });
@@ -63,7 +64,13 @@ class Main extends React.Component {
                 {menu.map((punkt) => {
                     if (this.state.selected === punkt.value) {
                         const Component = punkt.Component;
-                        return <Component key={punkt.value} />;
+                        return (
+                            <Component
+                                key={punkt.value}
+                                userId={this.props.userId}
+                                name={punkt.value}
+                            />
+                        );
                     }
                 })}
             </div>

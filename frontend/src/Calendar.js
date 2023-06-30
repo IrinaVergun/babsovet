@@ -27,7 +27,8 @@ const messages = {
 
 const localizer = momentLocalizer(moment);
 
-const MyCalendar = (props) => {
+const MyCalendar = ({ userId, name }) => {
+    console.log(userId, name);
     const [open, setOpen] = React.useState(false);
     const [isedditing, setediting] = React.useState(false);
     const [slotInfo, setSlotInfo] = React.useState(null);
@@ -43,6 +44,8 @@ const MyCalendar = (props) => {
             color: 'green',
         },
     ]);
+    const pravo = name === 'forall' || userId === name;
+    console.log(pravo);
 
     function onSave() {
         if (title == '') {
@@ -78,13 +81,16 @@ const MyCalendar = (props) => {
     }
 
     // для создания события
+
     const onSelectSlot = useCallback((slotInfo) => {
-        setOpen(true);
-        setSlotInfo(slotInfo);
-        setediting(true);
-        setTitle('');
-        console.log(slotInfo);
-        setId(null);
+        if (pravo) {
+            setOpen(true);
+            setSlotInfo(slotInfo);
+            setediting(true);
+            setTitle('');
+            console.log(slotInfo);
+            setId(null);
+        }
 
         //
     }, []);
@@ -153,13 +159,15 @@ const MyCalendar = (props) => {
                         ) : (
                             <>
                                 <div>{title}</div>
-                                <button
-                                    onClick={() => setediting(true)}
-                                    type='submit'
-                                    className='buttonpanel'
-                                >
-                                    Ред
-                                </button>
+                                {pravo && (
+                                    <button
+                                        onClick={() => setediting(true)}
+                                        type='submit'
+                                        className='buttonpanel'
+                                    >
+                                        Ред
+                                    </button>
+                                )}
                             </>
                         )}
                     </div>
