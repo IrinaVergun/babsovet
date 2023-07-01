@@ -26,22 +26,38 @@ const DB = new Database(DBOptions);
 app.use(express.static(path.join(__dirname, "..", "frontend", "build")));
 app.use(express.static("public"));
 
-app.post("/login", async (req, res) => {
-  const users = await DB.getUsers();
-  const user = users.find((user) => user.password === req.body.password);
-
-  if (!user) {
-    return res.status(401).json({
-      error: "Нет такого чела",
-    });
+function errorHandler(err, req, res, next) {
+  console.log('err', err)
+  if (res.headersSent) {
+    return next(err)
   }
-
-  const token = generateAccessToken({ username: req.body.username });
-  return res.status(200).json({
-    token,
-    id: user.id,
+  return res.status(500).json({
+    error: typeof err === 'string' ? err : (err?.message ?? 'Undefined error')
   });
+}
+
+app.post("/login", async (req, res, next) => {
+  try {
+    const users = await DB.getUsers();
+    const user = users.find((user) => user.password === req.body.password);
+
+    if (!user) {
+      return res.status(401).json({
+        error: "Нет такого чела",
+      });
+    }
+
+    const token = generateAccessToken({ username: req.body.username });
+    return res.status(200).json({
+      token,
+      id: user.id,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
+
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
