@@ -21,7 +21,6 @@ const events = {
     body('owner').isString().trim().notEmpty().custom(async (value) => {
       const users = await DB.getUsers();
       const user = users.find((user) => user.id === value);
-      console.log('user', user)
       if (!user) {
         throw new Error('Нет такого пользователя');
       }
