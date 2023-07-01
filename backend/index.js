@@ -74,5 +74,5 @@ app.post('/events/create', authenticateToken, ...events.create, checkValidations
 app.use(errorHandler)
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Babsovet app listening on port ${port}`);
 });

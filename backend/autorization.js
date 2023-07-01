@@ -14,7 +14,6 @@ const authenticateToken = (req, res, next) => {
     });
 
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-      console.log(err)
 
       if (err) return res.status(403).json({
         error: "Неверный токен или токен истек",
