@@ -34,7 +34,9 @@ class Database {
       range: `${tabName}!${range}`,
     });
 
-    return res.data.values;
+    const data = res.data.values;
+    data.shift(); // remove headers row
+    return data;
   }
 
   async _writeGoogleSheet(tabName, range, data) {
@@ -68,6 +70,20 @@ class Database {
       allDay,
       owner
     }
+  }
+
+  async getEvents(owner) {
+    const data = await this._readGoogleSheet(TABLES.events, 'A:F');
+    const mappedData = data.map(([id, title, start, end, allDay, owner]) => ({
+      id,
+      title,
+      start: Number(start),
+      end: Number(end),
+      allDay: JSON.parse(allDay.toLowerCase()),
+      owner
+    }));
+    const filteredData = owner ? mappedData.filter(event => event.owner === owner) : mappedData;
+    return filteredData;
   }
 }
 

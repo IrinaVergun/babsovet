@@ -6,6 +6,7 @@ const { generateAccessToken, authenticateToken } = require("./autorization");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { events, checkValidations } = require("./validators");
+const { GENERAL_EVENT_OWNER } = require("./constants");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -65,6 +66,18 @@ app.post('/events/create', authenticateToken, ...events.create, checkValidations
 
     return res.status(200).json({
       event
+    });
+  } catch (err) {
+    next(err);
+  }
+})
+
+app.get('/events/get', authenticateToken, ...events.get, checkValidations, async (req, res, next) => {
+  try {
+    const owner = req.query.owner === GENERAL_EVENT_OWNER ? null : req.query.owner;
+    const events = await DB.getEvents(owner);
+    return res.status(200).json({
+      events
     });
   } catch (err) {
     next(err);
