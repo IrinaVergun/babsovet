@@ -1,10 +1,11 @@
 require("dotenv").config();
 const path = require("path");
 const express = require("express");
-const Database = require("./database");
-const { generateAccessToken } = require("./autorization");
+const { DB } = require("./dbInstance");
+const { generateAccessToken, authenticateToken } = require("./autorization");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const { events, checkValidations } = require("./validators");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,13 +15,6 @@ app.use(cors());
 
 // JSON
 app.use(bodyParser.json());
-
-const DBOptions = {
-  serviceAccountKeyFile: process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE_PATH,
-  sheetId: process.env.GOOGLE_SHEET_ID,
-};
-
-const DB = new Database(DBOptions);
 
 // React web app
 app.use(express.static(path.join(__dirname, "..", "frontend", "build")));
@@ -56,6 +50,26 @@ app.post("/login", async (req, res, next) => {
     next(err);
   }
 });
+
+app.post('/events/create', authenticateToken, ...events.create, checkValidations, async (req, res, next) => {
+  try {
+    // Event object
+    // title: string
+    // start: timestamp
+    // end: timestamp
+    // allDay: boolean
+    // owner: string
+    const data = req.body;
+
+    const event = await DB.createEvent(data);
+
+    return res.status(200).json({
+      event
+    });
+  } catch (err) {
+    next(err);
+  }
+})
 
 app.use(errorHandler)
 

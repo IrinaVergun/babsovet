@@ -1,4 +1,10 @@
 const { google } = require('googleapis');
+const { v4: uuidv4 } = require('uuid');
+
+const TABLES = {
+  users: 'Users',
+  events: 'Events',
+}
 
 /*
   Google Sheets as DB abstraction
@@ -46,8 +52,22 @@ class Database {
   }
 
   async getUsers() {
-    const data = await this._readGoogleSheet('Users', 'A:B');
+    const data = await this._readGoogleSheet(TABLES.users, 'A:B');
     return data.map(([id, password]) => ({ id, password }))
+  }
+
+  async createEvent({ title, start, end, allDay, owner }) {
+    const id = uuidv4();
+    const event = [id, title, start, end, allDay, owner];
+    await this._writeGoogleSheet(TABLES.events, 'A:F', [event]);
+    return {
+      id,
+      title,
+      start,
+      end,
+      allDay,
+      owner
+    }
   }
 }
 
