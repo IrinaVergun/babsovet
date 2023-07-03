@@ -84,6 +84,33 @@ app.get('/events/get', authenticateToken, ...events.get, checkValidations, async
   }
 })
 
+app.patch('/events/edit/:id', authenticateToken, ...events.edit, checkValidations, async (req, res, next) => {
+  try {
+    // Event object
+    // title: string
+    // start: timestamp
+    // end: timestamp
+    // allDay: boolean
+    // owner: string
+    const data = req.body;
+    const id = req.params.id;
+
+    const event = await DB.editEvent(id, data);
+
+    if (!event) {
+      return res.status(404).json({
+        error: 'Событие не найдено'
+      });
+    }
+
+    return res.status(200).json({
+      event
+    });
+  } catch (err) {
+    next(err);
+  }
+})
+
 app.use(errorHandler)
 
 app.listen(port, () => {
