@@ -36,6 +36,7 @@ export default class SnaikeGame extends Component {
                         )}
                     </div>
                 </div>
+                <div className={Z.update}>Version 1.0 обновление каждую неделю</div>
             </div>
         );
     }

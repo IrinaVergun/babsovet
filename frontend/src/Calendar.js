@@ -7,7 +7,7 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import './Calendar.css';
 import { v4 as uuidv4 } from 'uuid';
-import { createEvent, getEvents } from './api';
+import { createEvent, getEvents, editEvent } from './api';
 import loader from './images/ZUiY.gif';
 
 moment.locale('ru');
@@ -46,7 +46,8 @@ const MyCalendar = ({ userId, name }) => {
         },
     ]);
     const [zagruzka, goZagruzka] = React.useState(false);
-    console.log(zagruzka);
+    const [selectedOwner, setSelectedOwner] = React.useState(null);
+
     const pravo = name === 'forall' || userId === name;
     function updateEvents() {
         goZagruzka(true);
@@ -96,19 +97,20 @@ const MyCalendar = ({ userId, name }) => {
                 // setEvents((prevEvents) => [...prevEvents, newEvent]);
                 await createEvent(newEvent);
                 // TODO: вызвать здесб
-                updateEvents();
             } else {
-                // редактирование
+                // редактирование const editEvent = {
+
                 const index = events.findIndex((event) => event.id === id);
-                const redevent = events[index];
+                const predevent = events[index];
                 const updatedEvent = {
-                    ...redevent,
+                    ...predevent,
+                    start: predevent.start.valueOf(),
+                    end: predevent.end.valueOf(),
                     title,
                 };
-                const newEvents = [...events];
-                newEvents[index] = updatedEvent;
-                setEvents(newEvents);
+                await editEvent(id, updatedEvent);
             }
+            updateEvents();
             setOpen(false);
         }
     }
@@ -130,6 +132,7 @@ const MyCalendar = ({ userId, name }) => {
             setSlotInfo(slotInfo);
             setediting(true);
             setTitle('');
+            setSelectedOwner(null);
             setId(null);
         }
 
@@ -140,6 +143,7 @@ const MyCalendar = ({ userId, name }) => {
         setOpen(true);
         setediting(false);
         setTitle(calEvent.title);
+        setSelectedOwner(calEvent.owner);
         setId(calEvent.id);
     }, []);
     if (zagruzka === true) {
@@ -155,6 +159,7 @@ const MyCalendar = ({ userId, name }) => {
             </div>
         );
     }
+
     return (
         <div style={{ background: 'white' }}>
             <div className='height600'></div>
@@ -213,18 +218,19 @@ const MyCalendar = ({ userId, name }) => {
                         ) : (
                             <>
                                 <div>{title}</div>
-                                {pravo && (
-                                    <button
-                                        onClick={() => setediting(true)}
-                                        type='submit'
-                                        className='buttonpanel'
-                                    >
-                                        Ред
-                                    </button>
-                                )}
-                                <button onClick={() => onDelete()} className='buttonpanel'>
+                                {pravo &&
+                                    (selectedOwner === 'forall' || selectedOwner === userId) && (
+                                        <button
+                                            onClick={() => setediting(true)}
+                                            type='submit'
+                                            className='buttonpanel'
+                                        >
+                                            Ред
+                                        </button>
+                                    )}
+                                {/* <button onClick={() => onDelete()} className='buttonpanel'>
                                     х
-                                </button>
+                                </button> */}
                             </>
                         )}
                     </div>

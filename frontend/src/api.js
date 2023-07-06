@@ -60,3 +60,24 @@ export const getEvents = async (owner) => {
         };
     }
 };
+
+export const editEvent = async (id, event) => {
+    const response = await fetch(`https://babsovet.onrender.com/events/edit/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            authorization: `Bearer ${document.cookie}`,
+        },
+        body: JSON.stringify(event),
+    });
+    const data = await response.json();
+    if (response.status === 200) {
+        return {
+            event: data.event,
+        };
+    } else {
+        return {
+            error: data.error,
+        };
+    }
+};
