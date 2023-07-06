@@ -46,7 +46,6 @@ const Snakepole = ({ onGameEnd }) => {
     };
     const gameLoop = () => {
         const timerId = setTimeout(() => {
-            console.log(gameLoop);
             let newSnake = snake;
             let move = [];
             switch (direction) {

@@ -7,7 +7,7 @@ import { login } from './api';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { login: false, id: null, token: null };
+        this.state = { login: false, id: null };
     }
     render() {
         if (this.state.login) {
@@ -17,7 +17,6 @@ class App extends Component {
                 <div className='app'>
                     <Form
                         onSubmit={async (password) => {
-                            console.log('password', password);
                             if (password === '') {
                                 alert(
                                     'Сказано ввести пароль, топишь потыкать клавиши, которые я сказала ранее,по буквам...',
@@ -30,10 +29,10 @@ class App extends Component {
                                     alert(response.error);
                                 } else {
                                     alert('welcome epta!');
+                                    document.cookie = response.token;
                                     this.setState({
                                         login: true,
                                         id: response.id,
-                                        token: response.token,
                                     });
                                 }
                             }

@@ -37,11 +37,9 @@ class Main extends React.Component {
         this.state = {
             selected: 'glavnaya',
         };
-        console.log(this.props.userId);
     }
     onMenuClick = (value) => {
         this.setState({ selected: value });
-        console.log(`клик на ${value}`);
     };
     render() {
         return (

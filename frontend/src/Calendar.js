@@ -7,6 +7,7 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import './Calendar.css';
 import { v4 as uuidv4 } from 'uuid';
+import { createEvent, getEvents } from './api';
 
 moment.locale('ru');
 const messages = {
@@ -28,7 +29,6 @@ const messages = {
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = ({ userId, name }) => {
-    console.log(userId, name);
     const [open, setOpen] = React.useState(false);
     const [isedditing, setediting] = React.useState(false);
     const [slotInfo, setSlotInfo] = React.useState(null);
@@ -45,9 +45,36 @@ const MyCalendar = ({ userId, name }) => {
         },
     ]);
     const pravo = name === 'forall' || userId === name;
-    console.log(pravo);
 
-    function onSave() {
+    function updateEvents() {
+        getEvents(name).then((data) => {
+            console.log(data);
+            const events = data.events.map((event) => {
+                const updatedEvent = {
+                    ...event,
+                    start: new Date(event.start),
+                    end: new Date(event.end),
+                };
+                if (event.owner === 'irina') {
+                    updatedEvent.color = '#ff4326';
+                } else if (event.owner === 'anasteisha') {
+                    updatedEvent.color = '#26afff';
+                } else if (event.owner === 'julia') {
+                    updatedEvent.color = '#ff8426';
+                } else if (event.owner === 'forall') {
+                    updatedEvent.color = '#11f211';
+                }
+                return updatedEvent;
+            });
+            setEvents(events);
+        });
+    }
+
+    useEffect(() => {
+        updateEvents();
+    }, []);
+
+    async function onSave() {
         if (title == '') {
             alert(
                 'Введите событие, оно у вас пустое... Не, ну в внатуре так сложно заполнить событие или что? Ты как вообще до этого дошёл? Ты кто по жизне вообще? Ты чей хлеб ска хаваешь? Ты начинаешь по тонкой дороге ходить мой друг, весьма тонкой и смотри по сторонам после таких поворотов на ней бывают и щели. Как провалишься, считай что, пиши -пропало. ',
@@ -57,13 +84,16 @@ const MyCalendar = ({ userId, name }) => {
                 // создание
                 const newEvent = {
                     title: title,
-                    start: slotInfo.start,
-                    end: slotInfo.end,
+                    start: slotInfo.start.valueOf(),
+                    end: slotInfo.end.valueOf(),
                     allDay: true,
-                    id: uuidv4(),
+                    owner: name,
                 };
 
-                setEvents((prevEvents) => [...prevEvents, newEvent]);
+                // setEvents((prevEvents) => [...prevEvents, newEvent]);
+                await createEvent(newEvent);
+                // TODO: вызвать здесб
+                updateEvents();
             } else {
                 // редактирование
                 const index = events.findIndex((event) => event.id === id);
@@ -79,6 +109,15 @@ const MyCalendar = ({ userId, name }) => {
             setOpen(false);
         }
     }
+    function onDelete() {
+        const newEvent = {
+            title: 0,
+            start: 0,
+            end: 0,
+            allDay: 0,
+            owner: 0,
+        };
+    }
 
     // для создания события
 
@@ -88,7 +127,6 @@ const MyCalendar = ({ userId, name }) => {
             setSlotInfo(slotInfo);
             setediting(true);
             setTitle('');
-            console.log(slotInfo);
             setId(null);
         }
 
@@ -168,6 +206,9 @@ const MyCalendar = ({ userId, name }) => {
                                         Ред
                                     </button>
                                 )}
+                                <button onClick={() => onDelete()} className='buttonpanel'>
+                                    х
+                                </button>
                             </>
                         )}
                     </div>

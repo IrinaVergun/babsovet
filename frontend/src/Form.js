@@ -13,17 +13,14 @@ class Form extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        console.log('form is submited. Pasword value is', this.state.paswordtext);
         this.props.onSubmit(this.state.paswordtext);
     }
 
     handlePaswordlChange(event) {
-        console.log(' paswordtext was changed', this);
         this.setState({ paswordtext: event.target.value });
     }
 
     FactKlickOnGalky(event) {
-        console.log('клик был', event.target.checked);
         this.setState({ KlickonGalky: event.target.checked });
     }
 

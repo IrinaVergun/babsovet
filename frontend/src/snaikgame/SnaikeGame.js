@@ -17,7 +17,6 @@ export default class SnaikeGame extends Component {
 
     gameClick = () => {
         this.setState({ game: true, window: true });
-        console.log('клик играть ');
     };
 
     onGameEnd = () => {
