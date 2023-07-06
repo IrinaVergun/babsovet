@@ -8,6 +8,7 @@ import 'react-sliding-side-panel/lib/index.css';
 import './Calendar.css';
 import { v4 as uuidv4 } from 'uuid';
 import { createEvent, getEvents } from './api';
+import loader from './images/ZUiY.gif';
 
 moment.locale('ru');
 const messages = {
@@ -44,9 +45,11 @@ const MyCalendar = ({ userId, name }) => {
             color: 'green',
         },
     ]);
+    const [zagruzka, goZagruzka] = React.useState(false);
+    console.log(zagruzka);
     const pravo = name === 'forall' || userId === name;
-
     function updateEvents() {
+        goZagruzka(true);
         getEvents(name).then((data) => {
             console.log(data);
             const events = data.events.map((event) => {
@@ -67,9 +70,10 @@ const MyCalendar = ({ userId, name }) => {
                 return updatedEvent;
             });
             setEvents(events);
+
+            goZagruzka(false);
         });
     }
-
     useEffect(() => {
         updateEvents();
     }, []);
@@ -89,7 +93,6 @@ const MyCalendar = ({ userId, name }) => {
                     allDay: true,
                     owner: name,
                 };
-
                 // setEvents((prevEvents) => [...prevEvents, newEvent]);
                 await createEvent(newEvent);
                 // TODO: вызвать здесб
@@ -139,10 +142,23 @@ const MyCalendar = ({ userId, name }) => {
         setTitle(calEvent.title);
         setId(calEvent.id);
     }, []);
-
+    if (zagruzka === true) {
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <img src={loader} />
+            </div>
+        );
+    }
     return (
         <div style={{ background: 'white' }}>
             <div className='height600'></div>
+
             <Calendar
                 views={['month', 'agenda']}
                 defaultView='month'
