@@ -1,6 +1,9 @@
 const { google } = require('googleapis');
 const { v4: uuidv4 } = require('uuid');
 
+const HEADER_ROWS_COUNT = 1;
+const GOOGLE_SHEETS_ROWS_NUMERATION_STARTS_FROM = 1;
+
 const TABLES = {
   users: 'Users',
   events: 'Events',
@@ -53,6 +56,19 @@ class Database {
     })
   }
 
+  async _updateGoogleSheet(tabName, range, data) {
+    const googleSheetClient = await this._getClient();
+    await googleSheetClient.spreadsheets.values.update({
+      spreadsheetId: this.sheetId,
+      range: `${tabName}!${range}`,
+      valueInputOption: 'USER_ENTERED',
+      resource: {
+        "majorDimension": "ROWS",
+        "values": data
+      },
+    })
+  }
+
   async getUsers() {
     const data = await this._readGoogleSheet(TABLES.users, 'A:B');
     return data.map(([id, password]) => ({ id, password }))
@@ -62,6 +78,34 @@ class Database {
     const id = uuidv4();
     const event = [id, title, start, end, allDay, owner];
     await this._writeGoogleSheet(TABLES.events, 'A:F', [event]);
+    return {
+      id,
+      title,
+      start,
+      end,
+      allDay,
+      owner
+    }
+  }
+
+  async _getEventRange(id) {
+    const events = await this.getEvents();
+    const eventIndex = events.findIndex(event => event.id === id);
+    if (eventIndex === -1) {
+      return null;
+    }
+    const rowNumber = eventIndex + GOOGLE_SHEETS_ROWS_NUMERATION_STARTS_FROM + HEADER_ROWS_COUNT;
+    return `A${rowNumber}:F${rowNumber}`
+  }
+
+  async editEvent(id, { title, start, end, allDay, owner }) {
+    const event = [id, title, start, end, allDay, owner];
+    const range = await this._getEventRange(id);
+    if (!range) {
+      return null;
+    }
+
+    await this._updateGoogleSheet(TABLES.events, range, [event]);
     return {
       id,
       title,

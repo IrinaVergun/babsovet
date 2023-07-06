@@ -1,4 +1,4 @@
-const { body, query, validationResult } = require('express-validator');
+const { body, query, param, validationResult } = require('express-validator');
 const { DB } = require('./dbInstance');
 const { GENERAL_EVENT_OWNER } = require('./constants');
 
@@ -32,7 +32,13 @@ const events = {
   ],
   get: [
     query('owner').notEmpty().custom(eventOwnerValidation)
-  ]
+  ],
+  get edit() {
+    return [
+      param('id').isString().trim().notEmpty(),
+      ...this.create
+    ]
+  }
 }
 
 module.exports = {
