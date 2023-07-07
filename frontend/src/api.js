@@ -24,7 +24,7 @@ export const createEvent = async (event) => {
         method: 'POST',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
-            authorization: `Bearer ${document.cookie}`,
+            authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify(event),
     });
@@ -45,7 +45,7 @@ export const getEvents = async (owner) => {
         method: 'GET',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
-            authorization: `Bearer ${document.cookie}`,
+            authorization: `Bearer ${localStorage.getItem('token')}`,
         },
     });
     const data = await response.json();
@@ -66,7 +66,7 @@ export const editEvent = async (id, event) => {
         method: 'PATCH',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
-            authorization: `Bearer ${document.cookie}`,
+            authorization: `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify(event),
     });

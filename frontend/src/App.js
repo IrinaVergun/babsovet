@@ -29,7 +29,7 @@ class App extends Component {
                                     alert(response.error);
                                 } else {
                                     alert('welcome epta!');
-                                    document.cookie = response.token;
+                                    localStorage.setItem('token', response.token)
                                     this.setState({
                                         login: true,
                                         id: response.id,
