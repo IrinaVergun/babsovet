@@ -29,6 +29,11 @@ const messages = {
 
 const localizer = momentLocalizer(moment);
 
+const TouchCellWrapper = ({ children, value, onSelectSlot }) =>
+    React.cloneElement(React.Children.only(children), {
+        onTouchEnd: () => onSelectSlot({ action: 'click', slots: [value] }),
+    });
+
 const MyCalendar = ({ userId, name }) => {
     const [open, setOpen] = React.useState(false);
     const [isedditing, setediting] = React.useState(false);
@@ -177,6 +182,12 @@ const MyCalendar = ({ userId, name }) => {
                 style={{ height: 500 }}
                 onSelectEvent={onSelectEvent}
                 showAllEvents={true}
+                components={{
+                    // Исправление для мобильного создания событий
+                    dateCellWrapper: (props) => (
+                        <TouchCellWrapper {...props} onSelectSlot={onSelectSlot} />
+                    ),
+                }}
                 eventPropGetter={(event) => {
                     if (event.color) {
                         return {
