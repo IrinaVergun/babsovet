@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import C from './Content.module.css';
 import SnaikeGame from '../snaikgame/SnaikeGame';
 import MyCalendar from '../Calendar';
@@ -28,6 +28,12 @@ const menu = [
         name: 'Общий',
         value: 'forall',
         Component: MyCalendar,
+    },
+
+    {
+        name: 'Я хочу',
+        value: <textarea />,
+        Component: 'spisok',
     },
 ];
 

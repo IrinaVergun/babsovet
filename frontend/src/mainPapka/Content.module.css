@@ -6,9 +6,10 @@
 
 .header {
     display: grid;
-    grid-template-rows: 70px;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-template-areas: 'm j i a f';
+    grid-template-rows: 65px;
+    grid-template-columns: 20% 20% 20% 20% 20% 20%;
+    grid-template-areas: 'm j i a f l';
+    width: 83%;
 
     text-align: center;
     border-radius: 10px;
@@ -43,4 +44,8 @@
 
 .forall {
     grid-area: f;
+}
+
+.spisok {
+    grid-area: l;
 }
