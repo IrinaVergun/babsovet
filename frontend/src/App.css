@@ -33,14 +33,14 @@ form {
 }
 @media screen and (max-width: 576px) {
     .app {
-        background-image: url('./images/бабы и я.jpg');
+        background-image: url('./images/женщины3.jpg');
         height: 100%;
         background-size: 100%;
     }
 
     form {
         max-width: 280px;
-        margin-top: 60%;
+        margin-top: 40%;
         margin-left: 14%;
         color: azure;
     }
