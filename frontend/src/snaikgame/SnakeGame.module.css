@@ -53,3 +53,9 @@
     left: 0;
     color: white;
 }
+
+@media screen and (max-width: 576px) {
+    .mainblockgame {
+        margin-top: 20%;
+    }
+}

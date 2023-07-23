@@ -49,3 +49,37 @@
 .spisok {
     grid-area: l;
 }
+@media screen and (max-width: 576px) {
+    .header {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: auto;
+        font-family: none;
+    }
+    body {
+        height: 100%;
+    }
+}
+
+img {
+    height: 70%;
+}
+
+.julia {
+    margin-left: 5px;
+}
+.ananas {
+    margin-left: 5px;
+}
+.spisok {
+    margin-left: 5px;
+}
+
+.forall {
+    margin-left: 5px;
+}
+
+.irina {
+    margin-left: 5px;
+}

@@ -24,3 +24,9 @@
     height: 40px;
     border-radius: 5px;
 }
+
+@media screen and (max-width: 576px) {
+    div.rbc-calendar {
+        margin-top: 10%;
+    }
+}

@@ -31,3 +31,17 @@ form {
     min-height: 300px;
     background-color: #141619c9;
 }
+@media screen and (max-width: 576px) {
+    .app {
+        background-image: url('./images/бабы и я.jpg');
+        height: 100%;
+        background-size: 100%;
+    }
+
+    form {
+        max-width: 280px;
+        margin-top: 60%;
+        margin-left: 14%;
+        color: azure;
+    }
+}
