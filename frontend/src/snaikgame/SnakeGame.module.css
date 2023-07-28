@@ -55,9 +55,6 @@
 }
 
 @media screen and (max-width: 576px) {
-    .mainblockgame {
-        margin-top: 20%;
-    }
 }
 .krest {
     position: absolute;
@@ -74,18 +71,21 @@
     background-color: green;
     width: 40px;
     height: 40px;
+    border: 2px solid black;
 }
 .dvijok2 {
     display: flex;
     background-color: green;
     width: 40px;
     height: 40px;
+    border: 2px solid black;
 }
 .dvijok3 {
     display: flex;
     background-color: green;
     width: 40px;
     height: 40px;
+    border: 2px solid black;
 }
 .dvijok4 {
     display: flex;
@@ -93,6 +93,7 @@
     background-color: green;
     width: 40px;
     height: 40px;
+    border: 2px solid black;
 }
 .stroka1 {
     display: flex;

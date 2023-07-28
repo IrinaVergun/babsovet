@@ -5,8 +5,8 @@ import Z from './SnakeGame.module.css';
 const BOARD_SIZE = 10;
 const DEFAULT_CELLS_VALUE = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0));
 const AVATBLE_MOVES = ['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'];
-const SPEED = 500;
-const WIN_RESULT = `35`;
+const SPEED = 600;
+const WIN_RESULT = `25`;
 const checkAvaitableSlot = (position) => {
     switch (true) {
         case position >= BOARD_SIZE:
@@ -121,15 +121,27 @@ const Snakepole = ({ onGameEnd }) => {
                 ))}
                 <div className={Z.krest}>
                     <div className={Z.stroka1}>
-                        <div className={Z.dvijok1}></div>
+                        <div
+                            className={Z.dvijok1}
+                            onClick={() => setDirection(AVATBLE_MOVES[1])}
+                        ></div>
                     </div>
 
                     <div className={Z.stroka2}>
-                        <div className={Z.dvijok2}></div>
-                        <div className={Z.dvijok3}></div>
+                        <div
+                            className={Z.dvijok2}
+                            onClick={() => setDirection(AVATBLE_MOVES[3])}
+                        ></div>
+                        <div
+                            className={Z.dvijok3}
+                            onClick={() => setDirection(AVATBLE_MOVES[2])}
+                        ></div>
                     </div>
                     <div className={Z.stroka3}>
-                        <div className={Z.dvijok4}></div>
+                        <div
+                            className={Z.dvijok4}
+                            onClick={() => setDirection(AVATBLE_MOVES[0])}
+                        ></div>
                     </div>
                 </div>
             </div>
