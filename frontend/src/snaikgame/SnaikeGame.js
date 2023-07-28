@@ -28,6 +28,7 @@ export default class SnaikeGame extends Component {
             <div className={Z.image}>
                 <div className={`${Z.mainblockgame}  ${this.state.window === true && Z.black}`}>
                     {this.state.game && <Snakepole onGameEnd={this.onGameEnd} />}
+
                     <div onClick={() => this.gameClick()}>
                         {this.state.game !== true && (
                             <div className={Z.knopkaplay}>

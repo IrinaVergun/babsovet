@@ -59,3 +59,57 @@
         margin-top: 20%;
     }
 }
+.krest {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    background-color: wheat;
+    width: 120px;
+    height: 120px;
+    opacity: 0.5;
+}
+
+.dvijok1 {
+    display: flex;
+    background-color: green;
+    width: 40px;
+    height: 40px;
+}
+.dvijok2 {
+    display: flex;
+    background-color: green;
+    width: 40px;
+    height: 40px;
+}
+.dvijok3 {
+    display: flex;
+    background-color: green;
+    width: 40px;
+    height: 40px;
+}
+.dvijok4 {
+    display: flex;
+
+    background-color: green;
+    width: 40px;
+    height: 40px;
+}
+.stroka1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.stroka2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.stroka3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.onlypole {
+    position: relative;
+}

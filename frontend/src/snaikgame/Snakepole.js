@@ -1,5 +1,6 @@
 import React from 'react';
 import './SnakePole.css';
+import Z from './SnakeGame.module.css';
 
 const BOARD_SIZE = 10;
 const DEFAULT_CELLS_VALUE = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0));
@@ -98,24 +99,40 @@ const Snakepole = ({ onGameEnd }) => {
 
     return (
         <div className='zmeikaIres'>
-            {DEFAULT_CELLS_VALUE.map((row, indexR) => (
-                <div key={indexR} className='myrow'>
-                    {row.map((cell, indexC) => {
-                        let type =
-                            snake.some((elem) => elem[0] === indexR && elem[1] === indexC) &&
-                            'snake';
+            {' '}
+            <div className={Z.onlypole}>
+                {DEFAULT_CELLS_VALUE.map((row, indexR) => (
+                    <div key={indexR} className='myrow'>
+                        {row.map((cell, indexC) => {
+                            let type =
+                                snake.some((elem) => elem[0] === indexR && elem[1] === indexC) &&
+                                'snake';
 
-                        const head = snake[snake.length - 1];
-                        if (type === 'snake' && indexR === head[0] && indexC === head[1]) {
-                            type = 'head';
-                        } else if (type !== 'snake') {
-                            type = food[0] === indexR && food[1] === indexC && 'food';
-                        }
+                            const head = snake[snake.length - 1];
+                            if (type === 'snake' && indexR === head[0] && indexC === head[1]) {
+                                type = 'head';
+                            } else if (type !== 'snake') {
+                                type = food[0] === indexR && food[1] === indexC && 'food';
+                            }
 
-                        return <Cell key={indexC} type={type} />;
-                    })}
+                            return <Cell key={indexC} type={type} />;
+                        })}
+                    </div>
+                ))}
+                <div className={Z.krest}>
+                    <div className={Z.stroka1}>
+                        <div className={Z.dvijok1}></div>
+                    </div>
+
+                    <div className={Z.stroka2}>
+                        <div className={Z.dvijok2}></div>
+                        <div className={Z.dvijok3}></div>
+                    </div>
+                    <div className={Z.stroka3}>
+                        <div className={Z.dvijok4}></div>
+                    </div>
                 </div>
-            ))}
+            </div>
             <div className='blockres'>
                 <h1>Результат:{snake.length - 1}</h1>
             </div>
