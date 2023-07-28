@@ -6,7 +6,7 @@ const BOARD_SIZE = 10;
 const DEFAULT_CELLS_VALUE = Array(BOARD_SIZE).fill(Array(BOARD_SIZE).fill(0));
 const AVATBLE_MOVES = ['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'];
 const SPEED = 600;
-const WIN_RESULT = `25`;
+const WIN_RESULT = `40`;
 const checkAvaitableSlot = (position) => {
     switch (true) {
         case position >= BOARD_SIZE:
@@ -74,7 +74,9 @@ const Snakepole = ({ onGameEnd }) => {
             // если змея съела еду
             if (head[0] === food[0] && head[1] === food[1]) {
                 if (newSnake.length - 1 === WIN_RESULT) {
-                    alert('Победа!');
+                    alert(
+                        'Победа! Красавчик ты сука Лучший, неповторимый рекорд ёпта, ты просто непривзайденный игрок,я в ахуе!!!',
+                    );
                     return onGameEnd();
                 }
                 spliceIndex = 0;
