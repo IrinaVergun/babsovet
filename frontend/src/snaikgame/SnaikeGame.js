@@ -37,7 +37,9 @@ export default class SnaikeGame extends Component {
                         )}
                     </div>
                 </div>
-                <div className={Z.update}>Version 1.3 обновлено:часть мобилки поправлена</div>
+                <div className={Z.update}>
+                    Version 1.4 обновлено:змея двигаеться на телефоне и это не галюны!
+                </div>
             </div>
         );
     }
